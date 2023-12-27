@@ -36,10 +36,58 @@ axios.get(apiUrl).then(refreshWeather);
 }
 function handleSearch (event){
     event.preventDefault();
+autocomplete="off";
     let searchInput= document.querySelector("#search-form-input");
   
     searchCity(searchInput.value);
 }
+
+function displayfahrenheitTemperature(event){
+  event.preventDefault();
+  let fahrenheitTemperature= (celsiusTemperature * 9 /5 ) +32;
+
+
+
+
+
+
+
+
+
+
+
+  
+  let temperatureElement=document.querySelector("#temperature");
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+  temperatureElement.innerHTML=Math.round (celsiusTemperature);
+}
+
+function displaycelsiusTemperature(event){
+  event.preventDefault();
+  let temperatureElement=document.querySelector ("#temperature");
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove ("active");
+  temperatureElement.innerHTML=Math.round(celsiusTemperature);
+}
+
+celsiusTemperature=null;
+let form=document.querySelector("#search-form");
+form.addEventListener("submit", handleSearch)
+
+let fahrenheitLink=document.querySelector ("#fahrenheit-link");
+fahrenheitLink.addEventListener ("click", displayfahrenheitTemperature);
+
+let celsiusLink= document.querySelector("#celsius-link");
+celsiusLink.addEventListener("click", displaycelsiusTemperature);
+
+
+
+
+
+
+
+
 
 let searchFormElement = document.querySelector ("#search-form");
 searchFormElement.addEventListener("submit", handleSearch);
