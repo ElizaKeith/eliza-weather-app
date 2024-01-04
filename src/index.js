@@ -31,9 +31,10 @@ return `${day} ${hour}:${minuets}`
 
 function searchCity(city){
 let apiKey="o0bta765574648ffe02e8d81539be096";
-apiUrl= `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+apiUrl= `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=imperial`;
 axios.get(apiUrl).then(refreshWeather);
 }
+
 function handleSearch (event){
     event.preventDefault();
 autocomplete="off";
@@ -42,53 +43,36 @@ autocomplete="off";
     searchCity(searchInput.value);
 }
 
-function displayfahrenheitTemperature(event){
-  event.preventDefault();
-  let fahrenheitTemperature= (celsiusTemperature * 9 /5 ) +32;
 
 
 
+function displayForecast(){
+  let days = ["Tue", "Wed", "Thu", "Fri", "Sat"];
+let forecastHtml="";
+days.forEach(function (day) {
+   forecastHtml= 
+   forecastHtml +
+    `
+ <div class= "weather-forecast-day">
+<div class= "weather-forecast-date">${day}</div>
+<div class = "weather-forecast-icon">🌤️ </div>
+<div class= "weather-forecast-temperatures"> 
+<div class= "weather-forecast-temperature"> 
+<strong> 15 </strong>
+</div>
+<div class="weather-forecast-temperature"> 9 </div>
+</div>
+  </div>
+`;
+});
+ let forecastElement= document.querySelector("#forecast");
 
-
-
-
-
-
-
-
-  
-  let temperatureElement=document.querySelector("#temperature");
-  celsiusLink.classList.remove("active");
-  fahrenheitLink.classList.add("active");
-  temperatureElement.innerHTML=Math.round (celsiusTemperature);
+forecastElement.innerHTML=forecastHtml;
 }
 
-function displaycelsiusTemperature(event){
-  event.preventDefault();
-  let temperatureElement=document.querySelector ("#temperature");
-  celsiusLink.classList.add("active");
-  fahrenheitLink.classList.remove ("active");
-  temperatureElement.innerHTML=Math.round(celsiusTemperature);
-}
-
-celsiusTemperature=null;
 let form=document.querySelector("#search-form");
-form.addEventListener("submit", handleSearch)
-
-let fahrenheitLink=document.querySelector ("#fahrenheit-link");
-fahrenheitLink.addEventListener ("click", displayfahrenheitTemperature);
-
-let celsiusLink= document.querySelector("#celsius-link");
-celsiusLink.addEventListener("click", displaycelsiusTemperature);
-
-
-
-
-
-
-
-
-
+form.addEventListener("submit", handleSearch);
 let searchFormElement = document.querySelector ("#search-form");
 searchFormElement.addEventListener("submit", handleSearch);
 searchCity("Midlothian");
+displayForecast();
