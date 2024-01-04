@@ -16,6 +16,7 @@ let iconElement=document.querySelector("#icon");
   windSpeedElement.innerHTML= ` ${response.data.wind.speed} km/h`;
 temperatureElement.innerHTML=Math.round(temperature);
 iconElement.innerHTML=`<img src="${response.data.condition.icon_url}"  class="weather-app-icon"  />`;
+getForecast(response.data.city);
 }
 
 function formatDate(date) {
@@ -44,9 +45,19 @@ autocomplete="off";
 }
 
 
+function getForecast(city){
+let apiKey="o0bta765574648ffe02e8d81539be096";
+apiUrl= `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=imperial`;
+axios(apiUrl).then(displayForecast);
+}
 
 
-function displayForecast(){
+
+
+
+
+
+function displayForecast(response){
   let days = ["Tue", "Wed", "Thu", "Fri", "Sat"];
 let forecastHtml="";
 days.forEach(function (day) {
@@ -75,4 +86,4 @@ form.addEventListener("submit", handleSearch);
 let searchFormElement = document.querySelector ("#search-form");
 searchFormElement.addEventListener("submit", handleSearch);
 searchCity("Midlothian");
-displayForecast();
+
